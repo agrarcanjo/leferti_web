@@ -94,12 +94,14 @@ const Sales: React.FC = () => {
             </Modal>
       );
       */
-    const handleCountProduct = (index: number) => { 
+    const handleCountProduct = (prod: Product) => { 
         setProductsSelected( product => { 
-            const products = product.map((item, i) => {
-                if( index === i){
+            const products = product.map((item) => {
+                if( prod.id === item.id){
                     var p = item;
                     p.qnt++
+                    console.log('contou')
+                    setSale(sale => String (parseFloat(sale) + p.price));
                     return p;
                 }else {
                   return item;
@@ -109,45 +111,17 @@ const Sales: React.FC = () => {
         })     
     }
     
-    const handleRemoveProduct = (index: number) => {
-        var remove=-1; 
-        
-        setProductsSelected( product => { 
-            const products = product.map((item, i) => {
-                if( index === i){
-                    var p = item;
-                    if(p.qnt===0){
-                        remove = index;                        
-                    }else{ 
-                        let minus = p.qnt;
-                        p.qnt = minus - 1;
-                        console.log(p.qnt)
-                        return p;
-                    }                    
-                    return p;
-                }else {
-                  return item;
-                }                
-            });
-            return products;            
-        });
-        
-        if(remove!==-1){ 
-            removeProduct(remove); 
-        }
-            
-     
-    }
-
-    const removeProduct = ( index: number) => {
-        setProductsSelected(item => item.filter((_, i) => i !== index));        
-    }
-
-    const handleRemove = ( index: number) => {
+    const removeProduct = ( product: Product, key : number) => {
+        console.log('prepara remover')
         console.log(productsSelected)
-        console.log(index)
-        const products = productsSelected.splice(index, 1);
-        setProductsSelected(products);        
+        setSale(sale => String (parseFloat(sale) - (product.price * product.qnt)));
+        setProductsSelected(item => item.filter((_, i) =>  i !== key));        
+        console.log('removeu: ')
+        console.log(productsSelected)
+    }
+
+    const removeProductEntity = ( product: Product) => {
+        setProductsSelected(item => item.filter((_, i) => _.id !== product.id));       
     }
 
     async function findProduct(e: string){  
@@ -168,14 +142,19 @@ const Sales: React.FC = () => {
 
     function handleProductSelected(item: Product){
         setShowProductSelection(false);
-        item.qnt++;
-        if(productsSelected.find(e=>item)){
-            console.log('encontrou');
+        const product = productsSelected.find(e=>{ return e.id === item.id}); 
+        if(product){
+            console.log('encontrou e contou')
+            handleCountProduct(product)
+        }else{
+            console.log('contou')
+            item.qnt++;
+            const price = (parseFloat(sale) ? parseFloat(sale) : 0) + item.price ;
+            setSale(String(price));
+            setProductsSelected(p => [...p, item]);                     
         }
-
-        setSale(sale => sale + item.price);
-        setProductsSelected(product => [...product, item]);        
-        setProduct('');   
+        setProduct('');          
+        console.log(productsSelected)
     }
 
     return (
@@ -210,7 +189,7 @@ const Sales: React.FC = () => {
                 {(productsSelected.length > 0) &&
                     <View style={styles.switchContainer}>      
                             {productsSelected.map((item,key) => (
-                                <TouchableOpacity key={key} style={styles.cardProductSelected} onPress={() => handleCountProduct(key)}>
+                                <RectButton key={key} style={styles.cardProductSelected} onPress={() => handleCountProduct(item)}>
                                         <View style={styles.countButton}>
                                             <RectButton style={styles.countButtonStyle}>
                                                     <Text style={styles.textCountProduct}>{(item.qnt && item.qnt >=1)? item.qnt : null }</Text>
@@ -219,11 +198,11 @@ const Sales: React.FC = () => {
                                         <Text style={styles.productSelectedText}>{item.name}</Text>
 
                                         <View style={styles.imageRemove}>
-                                            <RectButton onPress={() => handleRemove(key)}>
+                                            <RectButton onPress={() => removeProduct(item, key)}>
                                                 <AntDesign name="close" size={20} color="#A52A2A" style={{ backgroundColor: '#FFFFFF' }} />
                                             </RectButton>
                                         </View>
-                                </TouchableOpacity>                        
+                                </RectButton>                        
                             ))} 
                     </View>  
                 }
