@@ -16,9 +16,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins_400Regular',
     marginBottom: 8,
   },
-
-  
-
+ 
   input: {
     backgroundColor: '#fff',
     borderWidth: 1.4,
@@ -31,7 +29,6 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
   },
  
-
   nextButton: {
     backgroundColor: '#15c3d6',
     borderRadius: 20,

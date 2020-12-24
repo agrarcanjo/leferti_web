@@ -1,46 +1,41 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { View, Image, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler'
 
-import styles from './styles';
-import api from '../../services/api';
-
-import landingImg from '../../assets/images/landing.png'
+import styles from './styles'; 
+ 
 import studyIcon from '../../assets/images/icons/study.png'
-import giveClassesIcon from '../../assets/images/icons/give-classes.png'
-import heartIcon from '../../assets/images/icons/heart.png'
+import giveClassesIcon from '../../assets/images/icons/give-classes.png' 
 
-const Landing: React.FC = () => {
-
-  const [totalConnections, setTotalConnections] = useState(0)
-
-  useEffect(() => {
-    api.get('connections').then(response => {
-      const { total } = response.data
-      setTotalConnections(total)
-    })
-  }, [])
+const Landing: React.FC = () => { 
 
   const navigation = useNavigation();
 
-  function handleNavigationToGiveClasses(){
-    navigation.navigate('GiveClasses')
+  function handleNavigationToCustomer(){
+    const p = { id: 0, name: '', email: '', cpf: '', phone: ''} 
+    navigation.navigate('CustomerForm', p)
   }
 
-  function handleNavigationToStudyTabs(){
-    navigation.navigate('StudyTabs')
+  function handleNavigationToSale(){
+    const p = { idCustomer: 0, customerName: '', idSale: 0, dateRegister: '', total: 0, discount: 0} 
+    navigation.navigate('Sales', p)
+  } 
+  function handleNavigationToSpending(){
+    const p = { id: 0, name: '', description: '', dateRegister: '', price: 0, amount: 0} 
+    navigation.navigate('SpendingForm',p)
   }
 
-  function handleNavigationToProductForm(){
-    navigation.navigate('ProductForm')
+  function handleNavigationToProduct(){
+    const p = { id: 0, name: '', description: '', price:0, cost: 0, dateRegister: ''} 
+    navigation.navigate('ProductForm', p)
   }
 
   return (
     <View style={styles.container}>
 
       <View style={styles.header}>
-        <Image source={landingImg} style={styles.banner} />
+        <Text style={styles.headerIcon}>Leferti</Text>
       </View>
     
       <View style={styles.landingContent}>
@@ -49,37 +44,34 @@ const Landing: React.FC = () => {
           <Text style={styles.titleBold}>O que deseja fazer ?</Text>
         </Text>
 
-        <View style={styles.buttonsContainer}> 
-          { /* 
-          <RectButton style={[styles.button, styles.buttonPrimary]} onPress={handleNavigationToStudyTabs}>
-            <Image source={studyIcon}/>
-            <Text style={styles.buttonText}>Estudar</Text>
-          </RectButton>
+        <View style={styles.buttonsContainer}>  
 
-          <RectButton           
-            style={[styles.button, styles.buttonSecondary]}
-            onPress={handleNavigationToGiveClasses}
-            >
-            <Image source={giveClassesIcon}/>
-            <Text style={styles.buttonText}>Dar aulas</Text>
-          </RectButton>*/ }
-
-          <RectButton style={[styles.button, styles.buttonPrimary]} onPress={handleNavigationToProductForm}>
+          <RectButton style={[styles.button, styles.buttonPrimary]} onPress={handleNavigationToProduct}>
             <Image source={studyIcon}/>
             <Text style={styles.buttonText}>Cadastrar Produto</Text>
           </RectButton>
 
-          <RectButton style={[styles.button, styles.buttonSecondary]}  onPress={handleNavigationToGiveClasses}
+          <RectButton style={[styles.button, styles.buttonSecondary]}  onPress={handleNavigationToCustomer}
             >
             <Image source={giveClassesIcon} />
-            <Text style={styles.buttonText}>Buscar Produto</Text>
+            <Text style={styles.buttonText}>Cadastrar Cliente</Text>
           </RectButton>
-        </View>
+        </View> 
 
-        <Text style={styles.totalConnections}>
-          Total de {totalConnections} conexões já realizadas {' '}
-          <Image source={heartIcon}/>
-        </Text>
+        <View style={styles.buttonsContainer}>  
+        <RectButton style={[styles.button, styles.buttonPrimary]} onPress={handleNavigationToSpending}>
+          <Image source={studyIcon}/>
+          <Text style={styles.buttonText}>Cadastrar Gastos</Text>
+        </RectButton>
+
+        <RectButton style={[styles.button, styles.buttonSecondary]}  onPress={handleNavigationToSale}
+          >
+          <Image source={giveClassesIcon} />
+          <Text style={styles.buttonText}>VENDER</Text>
+        </RectButton>
+        </View> 
+
+      
       </View>
 
     </View>

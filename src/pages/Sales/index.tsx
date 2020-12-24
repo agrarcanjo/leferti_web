@@ -1,162 +1,213 @@
-import React, { useState } from 'react';
-import { InteractionManager, Text, TouchableOpacity, View } from 'react-native'; 
-import {useNavigation, useRoute} from '@react-navigation/native';  
+import React, { useEffect, useState } from 'react';
+import { Alert, Text, TouchableOpacity, View } from 'react-native'; 
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';   
 
 import styles from './styles' 
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { RectButton, ScrollView, TextInput } from 'react-native-gesture-handler';
+import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import { AntDesign } from '@expo/vector-icons';  
 import api from '../../services/api'; 
+import { Sale, SaleItem } from '../../components/SaleItem';
+import DateFilter from '../../components/util/dateFilter';
 
-interface Product {
+export interface Product {
     id: number;
     name: string;
     price: number;
     qnt: number;
 }
+interface Customer {
+    id: number;
+    name: string;
+    email: string;
+    cpf: string;
+    phone: string;
+}
   
 
 const Sales: React.FC = () => {
-    const navigation = useNavigation();
-    
-    const route = useRoute();
+    const { params } = useRoute<RouteProp<{ Sales: Sale }, 'Sales'>>();
+    const navigation = useNavigation();     
 
-    const [countProduct, SetCountProduct] = useState(''); 
     const [product, setProduct] = useState(''); 
-    const [products, setProducts] = useState<Product[]>([]);
+    const [products, setProducts] = useState<Product[]>([]); 
     const [productsSelected, setProductsSelected] = useState<Product[]>([]);
+    const [total, setTotal] = useState('');  
     const [sale, setSale] = useState(''); 
-    const [customer, setCustomer] = useState(''); 
+    const [discount, setDiscount] = useState(''); 
+    const [customers, setCustomers] = useState<Customer[]>([]); 
+    const [customer, setCustomer] = useState('');  
+    const [customerSelected, setCustomerSelected] = useState<Customer>({id:0 , name:'', email:'', cpf: '', phone: ''}); 
     const [registrationDate, setRegistrationDate] = useState('');  
-    const [userInfo, setUserInfo] = useState({
-        //id: route.params.id, ,
-    });
-    const [showModal, setShowModal] = useState(false);
+    const [preventClick, setPreventClick] = useState(true);  
     const [showProductSelection, setShowProductSelection] = useState(true);
+    const [showCustomerSelection, setShowCustomerSelection] = useState(true);
+    const [id, setId] = useState(0);
+    
+    const [idsSaleItem, setIdsSaleItem] = useState<number[]>([]); 
 
     const handleBackButton = () => {
         navigation.goBack();
     }
+
+    useEffect(()=> {
+        let today = new Date();
+        setRegistrationDate(today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear());
+    }, [params]);
+
+    useEffect(() => { 
+        if(!!params){          
+          setCustomer(params.customerName);
+          setCustomerSelected({id:params.idCustomer , name:'', email:'', cpf: '', phone: ''}); 
+          setId(params.idSale);
+          {/**api.get<SaleItem[]>(`sale/saleItems/${params.idSale}`)
+                 .then(response => { 
+                     response.data.map(item => { 
+                        setProductsSelected(p => [...p, {id: item.idProduct, name: item.productName, price: parseFloat(item.productPrice+''), qnt: parseFloat(item.amount+'')}]);
+                        setIdsSaleItem(i => [...i, item.idSaleItem]);
+                     })})*/}
+
+          setTotal(String(params.total.toFixed(2)));
+          setDiscount(params.discount ? params.discount.toFixed(2): ''); 
+        }
+      }, [params]);
+ 
+    useEffect(() => {
+        var sum = parseFloat(total).toFixed(2); 
+        if(sum==='NaN') 
+            setSale('R$0,00')        
+        else{ 
+            setSale('R$'.concat(sum));   
+            var disc = parseFloat(discount).toFixed(2); 
+            if(disc!=='NaN'){ 
+                setSale('R$'.concat((parseFloat(total)-parseFloat(discount)).toFixed(2)))
+            }    
+        } 
+        setTotal(sum);  
+    }
+    ,[total, discount]);
  
 
-    const checkValue = (str: string, max: number) => {
-        if (str.charAt(0) !== '0' || str == '00') {
-          var num = parseInt(str);
-          if (isNaN(num) || num <= 0 || num > max) num = 1;
-          str =
-            num > parseInt(max.toString().charAt(0)) && num.toString().length == 1
-              ? '0' + num
-              : num.toString();
-        }
-        return str;
-      }
+ 
 
-    function dateTimeInputChangeHandler(e : string ) {
-        var input = e;
-        var expr = new RegExp(/\D\/$/);
-        if (expr.test(input)) input = input.substr(0, input.length - 3);
-        var values = input.split('/').map(function (v) {
-          return v.replace(/\D/g, '');
-        });
-        if (values[1]) values[1] = checkValue(values[1], 12);
-        if (values[0]) values[0] = checkValue(values[0], 31);
-        var output = values.map(function (v, i) {
-          return v.length == 2 && i < 2 ? v + '/' : v;
-        });
-        var out = output.join('').substr(0, 14); 
-        setRegistrationDate(out);
-      };
-
-      /*
-    const modalContent = () => (
-        <Modal>
-            <View style={styles.modalArea}>
-                    <View style={styles.modalBody}>
-
-                        <TouchableOpacity onPress={() => { setShowModal(false) }} style={styles.closeButton}> 
-                            <MaterialIcons name="expand-more" size={40} color="#000000" />
-                        </TouchableOpacity>                    
-
-                        <Text style={styles.label}>Nome ou ID do Produto</Text>
-                        <TextInput
-                            style={styles.input}
-                            value={product}
-                            onChangeText={text => setProduct(text)}  
-                        /> 
-                         
-                        <TouchableOpacity onPress={() => { setShowModal(false) }} style={styles.finishButton}>
-                            <Text  style={styles.finishButtonText}>Finalizar</Text>
-                        </TouchableOpacity>
-
-
-                    </View>
-                </View>
-            </Modal>
-      );
-      */
     const handleCountProduct = (prod: Product) => { 
-        setProductsSelected( product => { 
-            const products = product.map((item) => {
-                if( prod.id === item.id){
-                    var p = item;
-                    p.qnt++
-                    console.log('contou')
-                    setSale(sale => String (parseFloat(sale) + p.price));
-                    return p;
-                }else {
-                  return item;
-                }                
-            });
-            return products;            
-        })     
+        if(preventClick){
+            setProductsSelected( product => { 
+                const products = product.map((item) => {
+                    if( prod.id === item.id){
+                        let p = item;
+                        p.qnt++; 
+                        setTotal(String(parseFloat(total) + parseFloat(p.price + ""))); 
+                        return p;
+                    }else {
+                        return item;
+                    }                
+                });
+                return products;            
+            })}
+        setPreventClick(true);
     }
-    
-    const removeProduct = ( product: Product, key : number) => {
-        console.log('prepara remover')
-        console.log(productsSelected)
-        setSale(sale => String (parseFloat(sale) - (product.price * product.qnt)));
-        setProductsSelected(item => item.filter((_, i) =>  i !== key));        
-        console.log('removeu: ')
-        console.log(productsSelected)
-    }
-
-    const removeProductEntity = ( product: Product) => {
-        setProductsSelected(item => item.filter((_, i) => _.id !== product.id));       
-    }
+ 
+    const handleRemoveProduct = ( product: Product) => {  
+        let value = (parseFloat(total) - (product.price * product.qnt));
+        if(value < 0){
+            value = 0.0; 
+        }
+        setTotal(value.toFixed(2)); 
+        setProductsSelected(item => item.filter((_) =>  product.id !== _.id));
+        setPreventClick(false);          
+    } 
 
     async function findProduct(e: string){  
         setShowProductSelection(true);
-        setProduct(e);
-        if(e===''.trim()){
+        if(e.trim()===''){
+            setProduct('');
             setProducts([]);
             return;
-        }
+        }        
+        setProduct(e);
         await api.get('/product', {
             params : {
-              find: e
+              product: e
             }
         }).then(response => {             
             setProducts(response.data);  
+        }).catch(error =>
+            setProducts([])
+        )
+    }
+
+    function handleProductSelected(item: Product){ 
+        setShowProductSelection(false);
+        const product = productsSelected.find(e=>{ return e.id === item.id}); 
+        if(product){ 
+            handleCountProduct(product)
+        }else{ 
+            item.qnt++;            
+            setTotal(String((parseFloat(total) ? parseFloat(total) : 0.0) + item.price));
+            setProductsSelected(p => [...p, item]);                     
+        }
+        setProduct('');           
+    }
+
+    async function handleFindCustomer(customer: string){
+        setShowCustomerSelection(true);        
+        if(customer.trim()===''){ 
+            setCustomer('');
+            return;
+        }
+        setCustomer(customer);
+        await api.get('/customer', {
+            params : {
+              find: customer
+            }
+        }).then(response => {             
+            setCustomers(response.data);  
         })
     }
 
-    function handleProductSelected(item: Product){
-        setShowProductSelection(false);
-        const product = productsSelected.find(e=>{ return e.id === item.id}); 
-        if(product){
-            console.log('encontrou e contou')
-            handleCountProduct(product)
-        }else{
-            console.log('contou')
-            item.qnt++;
-            const price = (parseFloat(sale) ? parseFloat(sale) : 0) + item.price ;
-            setSale(String(price));
-            setProductsSelected(p => [...p, item]);                     
-        }
-        setProduct('');          
-        console.log(productsSelected)
+    function handleSelectedCustomer(item: Customer){
+        setCustomer(item.name);
+        setCustomerSelected(item);
+        setShowCustomerSelection(false);
     }
 
+    async function handleFinishSale(){
+        var date = new Date; 
+        const customer = customerSelected.id;
+        let productsId: Array<number> = [];
+        let productsAmount: Array<number> = [];
+        let productsPrice: Array<number> = []; 
+        productsSelected.map((item) => {
+            productsId.push(item.id);
+            productsAmount.push(item.qnt);
+            productsPrice.push(item.price);
+        }); 
+
+        const rD = (registrationDate!==''? registrationDate + " "+ ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) : ''); 
+
+        const sale = { registrationDate: rD, total, customer, discount, productsId, productsAmount, productsPrice, idsSaleItem}; 
+
+        await api.post('/sale', sale).then(response => {  
+            Alert.alert('Venda realizada!');   
+            setTotal('');
+            setDiscount('');
+            setCustomer('');
+            setProductsSelected([]);
+            setSale('');
+            setId(0);
+            setIdsSaleItem([]);
+            
+          }).catch(error => {
+            Alert.alert(error.response.data);  
+          })     
+    }
+
+
+    function dateTimeInputChangeHandler(e: string){
+        setRegistrationDate(DateFilter(e));
+    }
+  
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scroller} contentContainerStyle={{ padding: 24 }}>
@@ -174,10 +225,13 @@ const Sales: React.FC = () => {
                         <View style={styles.productItemSelect}>
                             {products.map((item,key) => (
                                 <TouchableOpacity 
-                                    style={styles.productItem} 
+                                    style={[styles.productItem, 
+                                        key%2===0 ? 
+                                            {backgroundColor: '#fac8e18a'} : 
+                                            {backgroundColor: '#fce1efa1'}]} 
                                     key={key} 
                                     onPress={()=>handleProductSelected(item)}> 
-                                    <View style={{flex: 1}}>
+                                    <View>
                                         <Text>{item.name}</Text>                                        
                                     </View>
                                 </TouchableOpacity>
@@ -186,30 +240,29 @@ const Sales: React.FC = () => {
                     </ScrollView>
                 }
 
-                {(productsSelected.length > 0) &&
-                    <View style={styles.switchContainer}>      
+                {(productsSelected.length > 0) &&  
+                    <ScrollView 
+                        style={styles.switchContainer}
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={true} >      
                             {productsSelected.map((item,key) => (
-                                <RectButton key={key} style={styles.cardProductSelected} onPress={() => handleCountProduct(item)}>
-                                        <View style={styles.countButton}>
-                                            <RectButton style={styles.countButtonStyle}>
-                                                    <Text style={styles.textCountProduct}>{(item.qnt && item.qnt >=1)? item.qnt : null }</Text>
-                                            </RectButton>
+                                <TouchableOpacity key={key} style={styles.cardProductSelected} onPress={() => handleCountProduct(item)}>
+                                        <View style={styles.countButton}> 
+                                            <Text style={styles.textCountProduct}>{(item.qnt && item.qnt >=1)? item.qnt : null }</Text>                                         
                                         </View>
-                                        <Text style={styles.productSelectedText}>{item.name}</Text>
-
+                                        <Text style={styles.productSelectedText}>{item.name}</Text>   
                                         <View style={styles.imageRemove}>
-                                            <RectButton onPress={() => removeProduct(item, key)}>
+                                            <TouchableOpacity onPress={() => handleRemoveProduct(item)}>
                                                 <AntDesign name="close" size={20} color="#A52A2A" style={{ backgroundColor: '#FFFFFF' }} />
-                                            </RectButton>
-                                        </View>
-                                </RectButton>                        
+                                            </TouchableOpacity>
+                                        </View>                                     
+                                </TouchableOpacity>  
                             ))} 
-                    </View>  
+                    </ScrollView>  
                 }
 
                 <Text style={styles.label}>Data</Text>
-                        <TextInput
-                                
+                        <TextInput                                
                                 style={{
                                     textAlign: 'center',
                                     width: 300,
@@ -221,26 +274,55 @@ const Sales: React.FC = () => {
                                     paddingHorizontal: 30,
                                 }}
                                 maxLength={10}
+                                keyboardType='number-pad'
                                 placeholder="DD/MM/YYYY"
                                 onChangeText={(e) => dateTimeInputChangeHandler(e)}
                                 value={registrationDate}
                 />
             
-                <Text style={styles.label}>Preço de compra</Text> 
+                <Text style={styles.label}>Valor total</Text> 
+                <TextInput 
+                    style={styles.input}
+                    value={sale}  
+                    editable={false}
+                />                 
+                
+                <Text style={styles.label}>Desconto</Text>
                 <TextInput
                     style={styles.input}
-                    value={sale}
-                    onChangeText={setCustomer}
+                    value={discount}
+                    onChangeText={setDiscount}
+                    keyboardType='number-pad'
                 /> 
 
-                <Text style={styles.label}>Cliente</Text>
+                <Text style={styles.label}>Nome ou ID do Cliente</Text>
                 <TextInput
                     style={styles.input}
                     value={customer}
-                    onChangeText={setCustomer}
+                    onChangeText={(e) => handleFindCustomer(e)}
                 /> 
+
+                {customers.length > 0 && showCustomerSelection && 
+                    <View style={styles.scrollerProduct}>
+                        <View style={styles.productItemSelect}>
+                            {customers.map((item,key) => (
+                                <TouchableOpacity 
+                                    style={[styles.productItem, 
+                                    key%2===0 ? 
+                                        {backgroundColor: '#fac8e18a'} : 
+                                        {backgroundColor: '#fce1efa1'}]}   
+                                    key={key} 
+                                    onPress={()=>handleSelectedCustomer(item)}> 
+                                    <View style={{flex: 1}}>
+                                        <Text>{item.name}</Text>                                        
+                                    </View>
+                                </TouchableOpacity>
+                            ))}     
+                        </View>
+                    </View>
+                }
  
-                <TouchableOpacity style={styles.nextButton} onPress={() => {}}>
+                <TouchableOpacity style={styles.nextButton} onPress={() => handleFinishSale()}>
                     <Text style={styles.nextButtonText}>Finalizar Venda</Text>
                 </TouchableOpacity>
 

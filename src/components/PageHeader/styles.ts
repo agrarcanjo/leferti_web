@@ -2,8 +2,14 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
-    padding: 40,
-    backgroundColor: '#8257e5',
+    padding: 3,
+    backgroundColor: '#fbc9e4ad',
+    paddingBottom: 14,
+    
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 20,
   },
 
   topBar: {
@@ -11,21 +17,35 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-
-  title: {
-    fontFamily: 'Archivo_700Bold',
-    color: '#fff',
-    fontSize: 24,
-    lineHeight: 32,
-    maxWidth: 160,
-    marginVertical: 40,
-  },
-
+ 
   header:{
     flexDirection:'row',
     alignItems:'center',
     justifyContent:'space-between'
-  }
+  },
+
+  body:{
+    marginLeft: 25,
+    marginRight: 25,
+  },
+  
+  title: {
+    color: '#FFFFFF',
+    fontSize: 25,
+    fontFamily: 'Archivo_400Regular',
+    marginBottom: 10,
+    paddingBottom: 14,
+    borderBottomWidth: 0.8,
+    borderBottomColor: '#FFFFFF', 
+    marginVertical: 40,
+    flex: 1,
+    marginLeft: 25,
+    
+  },
+
+  headerRight:{
+    marginRight: 15,
+  },
 });
 
 export default styles;

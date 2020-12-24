@@ -1,14 +1,13 @@
 {
   "expo": {
-    "name": "Proffy",
-    "slug": "proffy",
+    "name": "Leferti",
+    "slug": "Leferti",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
+    "splash": { 
       "resizeMode": "cover",
-      "backgroundColor": "#8257E5"
+      "backgroundColor": "#ffbddec2"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -17,10 +16,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.leferti.leferti"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "android": {
+      "package": "com.leferti.leferti",
+      "versionCode": 1
     }
   }
 }

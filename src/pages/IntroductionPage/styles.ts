@@ -6,15 +6,18 @@ const styles = StyleSheet.create({
     backgroundColor:'#f0f0f7',    
   },
   header:{
-    backgroundColor:"#8257E5",
-    height:350,
+    backgroundColor:"#FF69B4",
+    height:250,
     justifyContent:'center',
     alignItems:'center'
   },
   headerIcon:{
-    width:120,
-    height:120,
-    marginTop: 84,
+    width:200,
+    height:200,
+    marginTop: 84, 
+    color: '#FFFFFF',
+    fontSize: 54,
+    fontFamily:'Archivo_700Bold',
   },
   headerBackground:{
     position:'absolute',
@@ -26,13 +29,7 @@ const styles = StyleSheet.create({
     alignItems:'flex-start',
     marginHorizontal:40,
   },
-  introductionNumber:{
-    fontSize:40,
-    fontFamily:'Archivo_400Regular',
-    color: '#6A6180',
-    opacity:0.16,
-    marginVertical:24,
-  },
+ 
   introductionText:{
     fontFamily:'Poppins_500Medium',
     fontSize:24,

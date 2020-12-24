@@ -10,11 +10,7 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 20
     },
-
-    scrollerProducts: {
-        marginHorizontal: 20,
-    },
-
+ 
     title: {
         color: '#5c8599',
         fontSize: 24,
@@ -32,33 +28,8 @@ const styles = StyleSheet.create({
         zIndex: 9,
     },
 
-    modalButton: {
-        backgroundColor: '#4EADBE',
-        borderRadius: 10, 
-    },
-
-    modalText: {
-        fontSize: 14,
-        color: '#268596',
-    },
-
-    modalArea: {
-        flex: 1,
-        backgroundColor: 'rgba(0,0,0, 0.5)',
-        justifyContent: 'flex-end',
-    },
-
-    modalBody: {
-        backgroundColor: '#83D6E3',
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        paddingTop: 10,
-        paddingVertical: 20,
-        paddingBottom: 40,
-        paddingHorizontal: 20,
-        minHeight: 500,
-    },
-
+ 
+ 
     input: {
         backgroundColor: '#fff',
         borderWidth: 1.4,
@@ -76,29 +47,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins_400Regular',
         marginBottom: 8,
     },
-
-    closeButton: {
-        width: 40,
-        height: 40,
-        zIndex: 9
-    },
-
-    button: {
-        backgroundColor: 'lightblue',
-        padding: 12,
-        margin: 16,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 4,
-        borderColor: 'rgba(0, 0, 0, 0.1)',
-    },
-
-    modalItem: {
-        backgroundColor: '#FFFFFF',
-        borderRadius: 10,
-        marginBottom: 15,
-        padding: 10,
-    },
+  
 
     finishButton: {
         backgroundColor: '#268596',
@@ -108,11 +57,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
 
-    finishButtonText: {
-        color: '#FFFFFF',
-        fontSize: 17,
-        fontWeight: 'bold',
-    },
+  
 
     nextButton: {
         backgroundColor: '#15c3d6',
@@ -129,26 +74,22 @@ const styles = StyleSheet.create({
         color: '#FFF',
     },
 
-    productItem: {
-        flexDirection: 'row',
-        padding: 15,   
+    productItem: { 
+        borderRadius: 5,
+        flexDirection: 'row', 
         justifyContent: 'center',
+        padding: 10,
     },
 
-    productItemSelect: {
-        borderRadius: 20,
-        borderWidth: 1.4,
-        backgroundColor: '#15c3d6',
+    productItemSelect: { 
     },
 
     scrollerProduct: {
-        maxHeight: 200,
-        paddingBottom: 20
+        maxHeight: 300,
+        paddingBottom: 20,
+        overflow: 'scroll',
     },
-
-    scrollerProductSelected: {
-        flexDirection: 'row',
-    },
+ 
 
     cardProductSelected: { 
         minWidth: 50,
@@ -166,13 +107,7 @@ const styles = StyleSheet.create({
         marginRight: 8,
     },
 
-    productWrapper: {
-        borderRadius: 20,
-        marginBottom: 32,
-        marginRight: 8,
-        backgroundColor: '#D3E2E5'
-    },
-
+   
     imageRemove: {
         position: 'absolute',
         top: 0,
@@ -186,6 +121,8 @@ const styles = StyleSheet.create({
         borderColor: '#D3E2E5',
 
         overflow: 'hidden',
+ 
+  
         borderRadius: 10,
         marginTop: -10,
 
@@ -199,8 +136,8 @@ const styles = StyleSheet.create({
         fontSize: 16, 
     },
 
-    switchContainer: {
-        flexDirection: 'row', 
+    switchContainer: {  
+        marginTop: 20
     },
 
     countButton: {
@@ -217,11 +154,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-
-    countButtonStyle: {
-
-    },
-
+ 
     textCountProduct: { 
         fontSize: 15 ,
         color: "#A52A2A" 

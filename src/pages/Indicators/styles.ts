@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native'
+import {Dimensions, StyleSheet} from 'react-native'
 
 const styles = StyleSheet.create({
   container:{
@@ -6,25 +6,21 @@ const styles = StyleSheet.create({
     justifyContent:'center',
   },
 
-  headerIcon:{
-    width:200,
-    height:200,
-    marginTop: 84, 
+  headerIcon:{ 
+    marginTop: 34, 
     color: '#FFFFFF',
-    fontSize: 54,
+    fontSize: 35,
     fontFamily:'Archivo_700Bold',
   },
 
   header:{
     backgroundColor:"#f587bec2",
-    height:150,
+    height:80,
     justifyContent:'center',
     alignItems:'center',
   },
 
-  landingContent:{
-    justifyContent:'center',
-    alignItems:'flex-start',
+  landingContent:{ 
     marginHorizontal:34,
     marginBottom:64,
     flex:1,
@@ -47,19 +43,18 @@ const styles = StyleSheet.create({
     fontFamily:'Poppins_600SemiBold',
   },
 
-  buttonsContainer:{
-    flexDirection:'row',
+  buttonsContainer:{ 
     marginTop: 20,
-    justifyContent:'space-between',
-    width:311,
-    height: 158,
+    justifyContent:'space-between', 
 
   },
 
   button:{
-    width:147,
+    flexDirection: 'row',
+    alignItems: 'center', 
     borderRadius:8,
-    padding:24,
+    padding:15,
+    marginBottom: 5,
     justifyContent:'space-between',
   },
 
@@ -72,10 +67,21 @@ const styles = StyleSheet.create({
     backgroundColor:'#ADD8E6',
   },
 
-  buttonText:{
-    fontFamily:'Archivo_700Bold',
+  label:{
+    fontFamily:'Poppins_400Regular',
     color:'#fff',
+    fontSize:15,    
+    justifyContent:'center',
+    alignItems:'center',
+    maxWidth: Dimensions.get('window').width/2, 
+  },
+
+  value: { 
+    fontFamily:'Archivo_700Bold',
+    color:'#FFFFFF',
     fontSize:20,
+    justifyContent:'center',
+    alignItems:'center',
   },
 
   totalConnections:{

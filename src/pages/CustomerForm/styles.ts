@@ -10,7 +10,17 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20
   },
- 
+
+  title: {
+    color: '#5c8599',
+    fontSize: 24,
+    fontFamily: 'Archivo_400Regular',
+    marginBottom: 32,
+    paddingBottom: 24,
+    borderBottomWidth: 0.8,
+    borderBottomColor: '#D3E2E6'
+  },
+
   label: {
     color: '#8fa7b3',
     fontFamily: 'Poppins_400Regular',
@@ -18,7 +28,6 @@ const styles = StyleSheet.create({
   },
 
   
-
   input: {
     backgroundColor: '#fff',
     borderWidth: 1.4,
@@ -30,8 +39,11 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     textAlignVertical: 'top',
   },
- 
 
+  uploadedImagesContainer: {
+    flexDirection: 'row',
+  }, 
+  
   nextButton: {
     backgroundColor: '#15c3d6',
     borderRadius: 20,
