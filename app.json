@@ -1,12 +1,12 @@
 {
   "expo": {
     "name": "Leferti",
-    "displayName": "Leferti",
+    "displayName" : "Leferti",
     "slug": "Leferti",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "splash": {
+    "splash": { 
       "resizeMode": "cover",
       "backgroundColor": "#ffbddec2",
       "image": "./assets/leferti.png"
@@ -27,7 +27,6 @@
     "android": {
       "package": "com.leferti.leferti",
       "versionCode": 1
-    },
-    "entryPoint": "node_modules/expo/AppEntry.js"
+    }
   }
 }
