@@ -1,13 +1,15 @@
 {
   "expo": {
     "name": "Leferti",
+    "displayName" : "Leferti",
     "slug": "Leferti",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": { 
       "resizeMode": "cover",
-      "backgroundColor": "#ffbddec2"
+      "backgroundColor": "#ffbddec2",
+      "image": "./assets/leferti.png"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

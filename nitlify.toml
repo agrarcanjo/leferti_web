@@ -4,4 +4,4 @@ command = "expo start -w"
 publish = "./build/"
 
 [build.environment]
-REACT_APP_API_URL = "https://meu-endereco-producao.com.br/api"
+REACT_APP_API_URL = "http://backend-dev22.us-east-2.elasticbeanstalk.com"
