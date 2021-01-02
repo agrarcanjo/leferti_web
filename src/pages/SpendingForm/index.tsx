@@ -30,12 +30,8 @@ const SpendingForm: React.FC = () => {
   const [amount, setAmount ] = useState(params.amount? params.amount.toString() : ''); 
 
   async function handleCreateSpending(){ 
-     
-    let valuePrice = price.replace(/R./, ""); 
-    valuePrice = valuePrice.replace(".", "");
-    valuePrice = valuePrice.replace(",", "."); 
-
-    const spending = {id, name, description, price: valuePrice, dateRegister, amount} 
+       
+    const spending = {id, name, description, price, dateRegister, amount} 
 
     await api.post('/spending', spending).then(response => {   
       Alert.alert('Relizado com sucesso, ID: ' + response.data.id);  

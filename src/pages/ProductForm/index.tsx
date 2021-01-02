@@ -16,15 +16,16 @@ const ProductForm: React.FC = () => {
 
   const navigation = useNavigation();
  
-  const [name, setName] = useState(params.name);
-  const [description, setDescription] = useState(params.description); 
-  const [price, setPrice] = useState(params.price.toFixed(2)); 
-  const [cost, setCost] = useState(params.cost.toFixed(2)); 
-  const [id, setId] = useState(params.id); 
-  const [dateRegisterString, setRegistrationDateString] = useState(params.dateRegister); 
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState(''); 
+  const [price, setPrice] = useState(''); 
+  const [cost, setCost] = useState(''); 
+  const [id, setId] = useState(0); 
+  const [dateRegisterString, setRegistrationDateString] = useState(''); 
  
   useEffect(() => {
     if(!!params && params.id!==null){
+      console.log(params)
       setName(params.name);
       setPrice(params.price.toFixed(2));
       setCost(params.cost.toFixed(2));
@@ -33,16 +34,8 @@ const ProductForm: React.FC = () => {
     }
   }, [params])
 
-  async function handleCreateProduct(){ 
-    
-    let valueCost = cost.replace(/R./, ""); 
-    valueCost = valueCost.replace(".", "");
-    valueCost = valueCost.replace(",", ".");
-    let valuePrice = price.replace(/R./, ""); 
-    valuePrice = valuePrice.replace(".", "");
-    valuePrice = valuePrice.replace(",", "."); 
-    
-    const product = {id, name, description, price: valuePrice, cost: valueCost, dateRegisterString} 
+  async function handleCreateProduct(){       
+    const product = {id, name, description, price, cost, dateRegisterString} 
 
     await api.post('/product', product).then(response => {   
       Alert.alert('Relizado com sucesso, ID: ' + response.data.id);  

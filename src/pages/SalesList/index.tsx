@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, TextInput, BorderlessButton, RectButton, Switch } from 'react-native-gesture-handler';
-import { View, Text, Alert } from 'react-native';
+import { ScrollView, TextInput, BorderlessButton, RectButton, Switch, FlatList } from 'react-native-gesture-handler';
+import { View, Text, Alert, ActivityIndicator, PanResponder } from 'react-native';
 import { Feather } from '@expo/vector-icons'
 
 import styles from './styles'
@@ -9,15 +9,21 @@ import SaleItem, { Sale } from '../../components/SaleItem';
 import api from '../../services/api'; 
 import { useFocusEffect } from '@react-navigation/native';
 import DateFilter from '../../components/util/dateFilter';
+import Loading from '../../components/util/loading';
 
 const SaleList: React.FC = () => { 
   const [customer, setCustomer] = useState('') ; 
   const [dateFilter, setDateFilter] = useState('') ; 
+  const [dateFilterEnd, setDateFilterEnd] = useState('') ; 
 
   const [sales, setSales] = useState<Sale[]>([]);
   
   const [isFiltersVisible, setIsFiltersVisible] = useState(true);
   const [isDebt, setIsDebt] = useState(false);
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   function handleToggleFilterIsVisible(){
     setIsFiltersVisible(!isFiltersVisible)
@@ -34,20 +40,37 @@ const SaleList: React.FC = () => {
     }, [])
   );
 
-  async function handleFilterSubmit(){ 
+  useEffect(() => {
+    //handleFilterSubmit();
+  },[]); 
+
+  async function handleFilterSubmit(){  
+  
     await api.get('/sale', {
       params : {
         customer,
         isDebt,
-        dateFilter 
-      }
+        dateFilter,
+        dateFilterEnd,
+        page
+      }, 
     }).then(response => {        
       setSales(response.data); 
-      setIsFiltersVisible(!isFiltersVisible) 
+      setIsFiltersVisible(!isFiltersVisible); 
     }).catch(error => {
       Alert.alert("Não encontrado!");
       setSales([]);
+      setPage(0);
+      setTotalPages(0);
     })    
+  }
+
+  async function refreshList(){
+    setRefreshing(true);
+    setPage(0);
+    await handleFilterSubmit();
+
+    setRefreshing(false);
   }
 
   function FilterButton(){
@@ -62,9 +85,18 @@ const SaleList: React.FC = () => {
     setDateFilter(DateFilter(e));
   }
 
+  function dateTimeEndInputChangeHandler(e : string ) {
+    setDateFilterEnd(DateFilter(e));
+  }
+
   return (
-    <View style={styles.container}>
-        <PageHeader title="Vendas Realizadas" headerRight={<FilterButton/>}>
+    <View style={styles.container}> 
+    <View style={styles.container2}> 
+        <View style={styles.header}>
+          <Text style={styles.title}>Vendas Realizadas</Text>
+          <View style={styles.headerRight}><FilterButton/></View>
+        </View> 
+        <View>
           {isFiltersVisible && (
             (
               <View style={styles.searchForm}>   
@@ -75,9 +107,12 @@ const SaleList: React.FC = () => {
                         style={styles.input}  
                         value={customer} 
                         onChangeText={setCustomer}
+                        keyboardType='default'
                       />
-                    </View> 
-                    <View style={styles.inputBlock}>             
+                    </View>                                        
+                </View>  
+                <View style={styles.inputGroup}>  
+                  <View style={styles.inputBlock}>             
                       <Text style={styles.label}>Data da Compra</Text>
                           <TextInput                                
                                   style={styles.input}
@@ -87,9 +122,19 @@ const SaleList: React.FC = () => {
                                   value={dateFilter}
                                   keyboardType='number-pad'
                             />
-                    </View>
-                     
-                </View>  
+                  </View>  
+                  <View style={styles.inputBlock}>             
+                      <Text style={styles.label}>Até Data</Text>
+                          <TextInput                                
+                                  style={styles.input}
+                                  maxLength={10}
+                                  placeholder="DD/MM/YYYY"
+                                  onChangeText={(e) => dateTimeEndInputChangeHandler(e)}
+                                  value={dateFilterEnd}
+                                  keyboardType='number-pad'
+                            />
+                  </View>  
+                </View>
                 <View style={styles.switchButton}>
                     <Switch
                       trackColor={{ false: '#767577', true: '#81b0ff' }}
@@ -106,20 +151,13 @@ const SaleList: React.FC = () => {
               </View>
               )
           )}
-        </PageHeader>
-        <ScrollView 
-        contentContainerStyle={{
-          paddingHorizontal: 5,
-          paddingBottom:16,
-        }}
-        style={styles.saleList}>
-          {sales.map((sale: Sale) => (
-            <SaleItem 
-              key={sale.idSale} 
-              sale={sale} 
-            />
-          ))}
-        </ScrollView>
+        </View> 
+        </View> 
+        <FlatList 
+          data={sales}
+          keyExtractor={sale => String(sale.idSale)}
+          renderItem={({item}) => <SaleItem sale={item}/> }
+        />         
     </View>
   );
 }

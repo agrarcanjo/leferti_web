@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
     marginVertical: 40,
     flex: 1,
     marginLeft: 25,
-    
   },
 
   headerRight:{

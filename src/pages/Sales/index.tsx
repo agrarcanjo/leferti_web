@@ -131,7 +131,7 @@ const Sales: React.FC = () => {
               product: e
             }
         }).then(response => {             
-            setProducts(response.data);  
+            setProducts(response.data.content);  
         }).catch(error =>
             setProducts([])
         )
@@ -161,8 +161,10 @@ const Sales: React.FC = () => {
             params : {
               find: customer
             }
-        }).then(response => {             
+        }).then(response => {          
             setCustomers(response.data);  
+        }).catch(error => {
+            setCustomers([]); 
         })
     }
 

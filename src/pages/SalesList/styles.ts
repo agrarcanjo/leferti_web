@@ -6,11 +6,45 @@ const styles = StyleSheet.create({
     backgroundColor: '#f0f0f7',
   },
 
+  container2: {    
+    padding: 3,
+    backgroundColor: '#fbc9e4ad',
+    paddingBottom: 14,
+    
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 20,
+  },
+
   saleList: {
     marginTop: 10,
   },
 
   searchForm: { 
+  },
+
+  headerRight:{
+    marginRight: 15,
+  },
+    
+  title: {
+    color: '#FFFFFF',
+    fontSize: 25,
+    fontFamily: 'Archivo_400Regular',
+    marginBottom: 10,
+    paddingBottom: 14,
+    borderBottomWidth: 0.8,
+    borderBottomColor: '#FFFFFF', 
+    marginVertical: 40,
+    flex: 1,
+    marginLeft: 25,
+  },
+
+  header:{
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between',
   },
 
   label: {

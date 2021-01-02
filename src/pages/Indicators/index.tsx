@@ -37,7 +37,7 @@ const Indicators: React.FC = () => {
     <View style={styles.container}>
 
       <View style={styles.header}>
-        <Text style={styles.headerIcon}>Indicadores Leferti</Text>
+        <Text style={styles.headerIcon}>Indicadores</Text>
       </View>
     
       <ScrollView style={styles.landingContent}>

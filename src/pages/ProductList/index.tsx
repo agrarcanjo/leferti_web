@@ -15,6 +15,8 @@ const ProductList: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [product, setProduct] = useState('') ; 
   const [description, setDescription] = useState('') ; 
+  const [page, setPage] = useState(0) ; 
+  const [totalPages, setTotalPages] = useState(0) ; 
    
   const [isFiltersVisible, setIsFiltersVisible] = useState(true);
  
@@ -34,14 +36,18 @@ const ProductList: React.FC = () => {
     navigation.navigate('ProductForm', p)
   }
 
-  async function handleFilterSubmit(){     
+  async function handleFilterSubmit(){    
+    const size = 0; 
     await api.get('/product', {
         params : {
           product,
-          description
+          description,
+          page, 
         }
-    }).then(response => {             
-        setProducts(response.data);  
+    }).then(response => {            
+      setProducts(response.data.content); 
+      setTotalPages(response.data.totalPages)  
+
     }).catch(error => {
       Alert.alert("Não encontrado!");
       setProducts([]);
@@ -90,10 +96,10 @@ const ProductList: React.FC = () => {
           )}
         </PageHeader>
         <ScrollView 
-        contentContainerStyle={{
-          paddingHorizontal: 16,
-          paddingBottom:16,
-        }}
+          contentContainerStyle={{
+            paddingHorizontal: 16,
+            paddingBottom:16,
+          }}
         style={styles.saleList}>
           {products.map((product: Product) => (
             <ProductItem 
