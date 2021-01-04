@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { ScrollView, TextInput, BorderlessButton, RectButton, TouchableOpacity } from 'react-native-gesture-handler';
-import { View, Text, Alert } from 'react-native';
+import { View, Text, Alert, SafeAreaView } from 'react-native';
 import { Feather } from '@expo/vector-icons'
 
 import styles from './styles'
 import PageHeader from '../../components/PageHeader'; 
 import api from '../../services/api';  
 import { useFocusEffect, useNavigation } from '@react-navigation/native'; 
-import CustomerItem, { Customer } from '../../components/CustomerItem';
+import CustomerItem, { Customer } from '../../components/CustomerItem'; 
 
 interface Props {
   navigation: {
@@ -23,6 +23,8 @@ const CustomerList: React.FC = () => {
 
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [customer, setCustomer] = useState('') ; 
+  const [loading, setLoading] = useState(true) ; 
+   
    
   const [isFiltersVisible, setIsFiltersVisible] = useState(true);
  
@@ -42,19 +44,25 @@ const CustomerList: React.FC = () => {
     navigation.navigate('CustomerForm', p)
   }
 
-  async function handleFilterSubmit(){     
-    await api.get('/customer', {
-        params : {
-          find: customer
-        }
-    }).then(response => {             
+  async function handleFilterSubmit(){  
+    setLoading(false);    
+      await api.get('/customer', {
+          params : {
+            find: customer
+          }
+      }).then(response => {            
         setCustomers(response.data);  
-    }).catch(error => {
-      setCustomers([]);
-      Alert.alert("Não encontrado!");
-    })
+      }).catch(error => {
+        setCustomers([]);
+        Alert.alert("Não encontrado!");
+      })
     
+    setLoading(true);
     setIsFiltersVisible(!isFiltersVisible)  
+  }
+
+  function handleChangeText(text: string){
+    setCustomer(text);
   }
 
   function FilterButton(){
@@ -64,10 +72,11 @@ const CustomerList: React.FC = () => {
       </BorderlessButton>
     )
   }
-
+  
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
         <PageHeader title="Clientes" headerRight={<FilterButton/>}>
+
           {isFiltersVisible && (
             (
               <View style={styles.searchForm}>   
@@ -77,13 +86,13 @@ const CustomerList: React.FC = () => {
                       <TextInput 
                         style={styles.input}  
                         value={customer} 
-                        onChangeText={setCustomer}
+                        onChangeText={text => handleChangeText(text)}
                       />
                     </View>  
                   </View>  
-                <RectButton style={styles.submitButton} onPress={handleFilterSubmit}>
+                <RectButton style={styles.submitButton} onPress={handleFilterSubmit}  enabled={loading} >
                   <Text style={styles.submitButtonText}>Buscar Cliente</Text>
-                </RectButton>
+                </RectButton> 
               </View>
               )
           )}
@@ -109,7 +118,7 @@ const CustomerList: React.FC = () => {
             <Feather name="plus" size={35} color="#FFFFFF"/>
           </TouchableOpacity>
         </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

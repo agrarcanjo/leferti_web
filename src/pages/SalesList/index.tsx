@@ -23,6 +23,7 @@ const SaleList: React.FC = () => {
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [loadingButton, setLoadingButton] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
   function handleToggleFilterIsVisible(){
@@ -45,7 +46,7 @@ const SaleList: React.FC = () => {
   },[]); 
 
   async function handleFilterSubmit(){  
-  
+    setLoadingButton(false);
     await api.get('/sale', {
       params : {
         customer,
@@ -63,6 +64,7 @@ const SaleList: React.FC = () => {
       setPage(0);
       setTotalPages(0);
     })    
+    setLoadingButton(true);
   }
 
   async function refreshList(){
@@ -145,9 +147,11 @@ const SaleList: React.FC = () => {
                     />     
                     <Text style={[styles.label, {marginLeft: 8, marginRight: 8}]}>Fiado</Text>           
                 </View>
-                <RectButton style={styles.submitButton} onPress={handleFilterSubmit}>
-                  <Text style={styles.submitButtonText}>Buscar Vendas</Text>
-                </RectButton>
+                {loadingButton && 
+                  <RectButton style={styles.submitButton} onPress={handleFilterSubmit}>
+                    <Text style={styles.submitButtonText}>Buscar Vendas</Text>
+                  </RectButton>
+                }
               </View>
               )
           )}

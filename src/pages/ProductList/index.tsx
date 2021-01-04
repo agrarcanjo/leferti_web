@@ -19,6 +19,7 @@ const ProductList: React.FC = () => {
   const [totalPages, setTotalPages] = useState(0) ; 
    
   const [isFiltersVisible, setIsFiltersVisible] = useState(true);
+  const [loading, setLoading] = useState(true);
  
   function handleToggleFilterIsVisible(){
     setIsFiltersVisible(!isFiltersVisible)
@@ -36,7 +37,8 @@ const ProductList: React.FC = () => {
     navigation.navigate('ProductForm', p)
   }
 
-  async function handleFilterSubmit(){    
+  async function handleFilterSubmit(){   
+    setLoading(false); 
     const size = 0; 
     await api.get('/product', {
         params : {
@@ -53,7 +55,8 @@ const ProductList: React.FC = () => {
       setProducts([]);
     })
     
-    setIsFiltersVisible(!isFiltersVisible)  
+    setLoading(true);
+    setIsFiltersVisible(!isFiltersVisible);      
   }
 
   function FilterButton(){
@@ -88,9 +91,11 @@ const ProductList: React.FC = () => {
                       />
                     </View> 
                   </View>  
-                <TouchableOpacity style={styles.submitButton} onPress={handleFilterSubmit}>
-                  <Text style={styles.submitButtonText}>Buscar Produtos</Text>
-                </TouchableOpacity>
+                {loading && 
+                  <TouchableOpacity style={styles.submitButton} onPress={handleFilterSubmit}>
+                    <Text style={styles.submitButtonText}>Buscar Produtos</Text>
+                  </TouchableOpacity>
+                }
               </View>
               )
           )}
