@@ -124,17 +124,19 @@ const Sales: React.FC = () => {
             setProduct('');
             setProducts([]);
             return;
-        }        
-        setProduct(e);
-        await api.get('/product', {
-            params : {
-              product: e
-            }
-        }).then(response => {             
-            setProducts(response.data.content);  
-        }).catch(error =>
-            setProducts([])
-        )
+        }     
+        setProduct(e); 
+        if(e.length >1){
+            await api.get('/product', {
+                params : {
+                  product: e
+                }
+            }).then(response => {             
+                setProducts(response.data.content);  
+            }).catch(error =>
+                setProducts([])
+            )
+        }          
     }
 
     function handleProductSelected(item: Product){ 
