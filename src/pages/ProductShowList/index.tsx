@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, TextInput, BorderlessButton, TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView, TextInput, BorderlessButton, TouchableOpacity, FlatList } from 'react-native-gesture-handler';
 import { View, Text} from 'react-native';
 import { Feather } from '@expo/vector-icons'
 
@@ -7,10 +7,10 @@ import styles from './styles'
 import PageHeader from '../../components/PageHeader';
 import ProductItem, { Product } from '../../components/ProductItem';
 import api from '../../services/api';  
-import { useFocusEffect, useNavigation } from '@react-navigation/native'; 
+import { useFocusEffect } from '@react-navigation/native'; 
+import IntroductionHeader from '../../components/IntroductionHeader';
   
-const ProductList: React.FC = () => { 
-  const navigation = useNavigation();
+const ProductShowList: React.FC = () => {  
 
   const [products, setProducts] = useState<Product[]>([]);
   const [product, setProduct] = useState('') ; 
@@ -31,13 +31,8 @@ const ProductList: React.FC = () => {
       setProducts([]);
     }, [])
   );
-
-  function handleAddProduct(){ 
-    const p = { id: 0, name: '', description: '', price:0, cost: 0, dateRegisterString: ''} 
-    navigation.navigate('ProductForm', p)
-  }
-
-  async function handleFilterSubmit(){   
+ 
+  const handleFilterSubmit = async () => {   
     setLoading(false); 
     const size = 0; 
     await api.get('/product', {
@@ -53,23 +48,14 @@ const ProductList: React.FC = () => {
     }).catch(error => {
       alert("Não encontrado!");
       setProducts([]);
-    })
-    
-    setLoading(true);
-    setIsFiltersVisible(!isFiltersVisible);      
+    })   
+    setLoading(true);    
   }
-
-  function FilterButton(){
-    return (
-      <BorderlessButton onPress={handleToggleFilterIsVisible} style={styles.filterButton}>
-        <Feather name="filter" size={25} color="#FFFFFF"/>
-      </BorderlessButton>
-    )
-  }
-
+ 
   return (
     <View style={styles.container}>
-        <PageHeader title="Produtos" headerRight={<FilterButton/>}>
+      <IntroductionHeader />
+        <PageHeader title="Produtos" >
           {isFiltersVisible && (
             (
               <View style={styles.searchForm}>   
@@ -81,15 +67,7 @@ const ProductList: React.FC = () => {
                         value={product} 
                         onChangeText={setProduct}
                       />
-                    </View>  
-                    <View style={styles.inputBlock}>             
-                      <Text style={styles.label}>Descrição</Text>
-                      <TextInput 
-                        style={styles.input}  
-                        value={description} 
-                        onChangeText={setDescription}
-                      />
-                    </View> 
+                    </View>   
                   </View>  
                 {loading && 
                   <TouchableOpacity style={styles.submitButton} onPress={handleFilterSubmit}>
@@ -100,29 +78,13 @@ const ProductList: React.FC = () => {
               )
           )}
         </PageHeader>
-        <ScrollView 
-          contentContainerStyle={{
-            paddingHorizontal: 16,
-            paddingBottom:16,
-          }}
-        style={styles.saleList}>
-          {products.map((product: Product) => (
-            <ProductItem 
-              key={product.id} 
-              product={product} 
-            />
-          ))}
-        </ScrollView>
-        <View style={styles.plusButton}>
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={handleAddProduct}
-          style={styles.touchableOpacityStyle}>
-          <Feather name="plus" size={35} color="#FFFFFF"/>
-        </TouchableOpacity>
-        </View>
+        <FlatList 
+          data={products}
+          keyExtractor={product => String(product.id)}
+          renderItem={({item}) => <ProductItem product={item} />}
+        />  
     </View>
   );
 }
 
-export default ProductList;
+export default ProductShowList;

@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react'; 
-import { View, Text, Alert  } from 'react-native'; 
+import { View, Text } from 'react-native'; 
 import { RectButton } from 'react-native-gesture-handler';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -29,7 +29,7 @@ const SpendingItem: React.FC<SpendingProps> = ({spending}) => {
       api.delete(`spending/${spending.id}`).then(()=> {  
         navigate('Landing');
       }).catch(error => {
-        Alert.alert(error.response.data);
+        alert(error.response.data);
       }) 
   }
 

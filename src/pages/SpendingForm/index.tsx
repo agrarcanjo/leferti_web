@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, ScrollView, Text, TextInput} from 'react-native';
+import { ScrollView, Text, TextInput} from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'; 
 import { TextInputMask } from 'react-native-masked-text';
@@ -34,7 +34,7 @@ const SpendingForm: React.FC = () => {
     const spending = {id, name, description, price, dateRegister, amount} 
 
     await api.post('/spending', spending).then(response => {   
-      Alert.alert('Relizado com sucesso, ID: ' + response.data.id);  
+      alert('Relizado com sucesso, ID: ' + response.data.id);  
       setName('');
       setDescription('');
       setAmount('');
@@ -43,7 +43,7 @@ const SpendingForm: React.FC = () => {
       setId(0);
       navigation.navigate('SpendingList');
     }).catch(error => {
-      Alert.alert(error.response.data);  
+      alert(error.response.data);  
     })        
   }  
 

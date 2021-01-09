@@ -1,14 +1,18 @@
 import React from 'react';
 import { View, Image, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { RectButton } from 'react-native-gesture-handler'
+import { RectButton, TouchableOpacity } from 'react-native-gesture-handler'
 
 import styles from './styles'; 
+import { useAuth } from '../../contexts/auth';
  
 import studyIcon from '../../assets/images/icons/study.png'
 import giveClassesIcon from '../../assets/images/icons/give-classes.png' 
+import { Feather } from '@expo/vector-icons'; 
 
 const Landing: React.FC = () => { 
+
+  const {signOut} = useAuth();
 
   const navigation = useNavigation();
 
@@ -30,6 +34,11 @@ const Landing: React.FC = () => {
     const p = { id: 0, name: '', description: '', price:0, cost: 0, dateRegister: ''} 
     navigation.navigate('ProductForm', p)
   }
+
+  const handleLogout = () => {
+    signOut();
+    navigation.navigate('IntroductionPage');    
+}
 
   return (
     <View style={styles.container}>
@@ -69,6 +78,15 @@ const Landing: React.FC = () => {
           <Image source={giveClassesIcon} />
           <Text style={styles.buttonText}>VENDER</Text>
         </RectButton>
+        </View>
+
+         <View style={styles.plusButton}>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={handleLogout}
+            style={styles.touchableOpacityStyle}>
+            <Feather name="log-out" size={35} color="#FFFFFF"/>
+          </TouchableOpacity>
         </View> 
 
       

@@ -5,29 +5,13 @@ const styles = StyleSheet.create({
     flex:1,
     backgroundColor:'#f0f0f7',    
   },
-  header:{
-    backgroundColor:"#FF69B4",
-    height:250,
-    justifyContent:'center',
-    alignItems:'center'
-  },
-  headerIcon:{
-    width:200,
-    height:200,
-    marginTop: 84, 
-    color: '#FFFFFF',
-    fontSize: 54,
-    fontFamily:'Archivo_700Bold',
-  },
-  headerBackground:{
-    position:'absolute',
-    bottom: 36,
-  },
+  
   introductionTextContainer:{
     flex:1,
     justifyContent:'center',
     alignItems:'flex-start',
     marginHorizontal:40,
+    marginTop:20,
   },
  
   introductionText:{

@@ -27,8 +27,7 @@ const Indicators: React.FC = () => {
     React.useCallback(() => { 
       api.get<Indicators>('sale/indicators')
                .then(response => {                 
-                setIndicators(response.data); 
-                console.log(response.data)
+                setIndicators(response.data);  
     })
     }, [])
   );

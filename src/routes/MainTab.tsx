@@ -12,6 +12,7 @@ import CustomerForm from '../pages/CustomerForm';
 import SpendingList from '../pages/SpendingList';
 import SpendingForm from '../pages/SpendingForm';
 import Indicators from '../pages/Indicators';
+import IntroductionPage from '../pages/IntroductionPage';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,5 +29,6 @@ export default () => (
         <Tab.Screen name="ProductForm" component={ProductForm} />        
         <Tab.Screen name="CustomerForm" component={CustomerForm} />
         <Tab.Screen name="SpendingForm" component={SpendingForm} />
+        <Tab.Screen name="IntroductionPage" component={IntroductionPage} />
     </Tab.Navigator>
 );

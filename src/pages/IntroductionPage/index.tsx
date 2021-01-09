@@ -2,8 +2,9 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, Image } from 'react-native';
  
-import giveClassesBackground from '../../assets/images/Background.png'
-import firstPageIcon from '../../assets/images/icons/page1.png' 
+import IntroductionHeader from '../../components/IntroductionHeader';
+import FooterPage from '../../components/FooterPage';
+import firstPageIcon from '../../assets/images/icons/page1.png';
 import { AntDesign } from '@expo/vector-icons'; 
 
 import styles from './styles'
@@ -14,22 +15,18 @@ const Introduction: React.FC = () => {
   const navigation = useNavigation()
 
   function handleNavigationToNextIntroduction(){
-    navigation.navigate('MainTab')
+    navigation.navigate('Login');
   }
   
-
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerIcon}>Leferti</Text>
-        <Image style={styles.headerBackground}source={giveClassesBackground}/>
-      </View>
+      <IntroductionHeader />
 
       <View style={styles.introductionTextContainer}>
         <Text style={styles.introductionText}>
-          Realize a gestão {"\n"}
-          da sua empresa {"\n"}
-          de forma fácil e ágil
+          Entre em contato {"\n"}
+          e escolha seu {"\n"}
+          Produto !
         </Text>
 
         <View style={styles.introductionFooter}>
@@ -39,6 +36,8 @@ const Introduction: React.FC = () => {
           </TouchableOpacity>
         </View>
       </View>
+
+      <FooterPage />
     </View>
   );
 }

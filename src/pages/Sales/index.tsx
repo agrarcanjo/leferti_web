@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Text, TouchableOpacity, View } from 'react-native'; 
+import { Text, TouchableOpacity, View } from 'react-native'; 
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';   
 
 import styles from './styles' 
@@ -193,7 +193,7 @@ const Sales: React.FC = () => {
         const sale = { registrationDate: rD, total, customer, discount, productsId, productsAmount, productsPrice, idsSaleItem}; 
 
         await api.post('/sale', sale).then(response => {  
-            Alert.alert('Venda realizada!');   
+            alert('Venda realizada!');   
             setTotal('');
             setDiscount('');
             setCustomer('');
@@ -203,7 +203,8 @@ const Sales: React.FC = () => {
             setIdsSaleItem([]);
             
           }).catch(error => {
-            Alert.alert(error.response.data);  
+            alert(error.response.data);  
+            console.log(error.response.data)
           })     
     }
 

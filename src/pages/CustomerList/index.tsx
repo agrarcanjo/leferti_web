@@ -1,22 +1,14 @@
 import React, { useState } from 'react';
 import { ScrollView, TextInput, BorderlessButton, RectButton, TouchableOpacity } from 'react-native-gesture-handler';
-import { View, Text, Alert, SafeAreaView } from 'react-native';
+import { View, Text, SafeAreaView } from 'react-native';
 import { Feather } from '@expo/vector-icons'
 
 import styles from './styles'
 import PageHeader from '../../components/PageHeader'; 
 import api from '../../services/api';  
-import { useFocusEffect, useNavigation } from '@react-navigation/native'; 
+import { useNavigation } from '@react-navigation/native'; 
 import CustomerItem, { Customer } from '../../components/CustomerItem'; 
 
-interface Props {
-  navigation: {
-    goBack(): any
-  },
-  show: {
-    params: boolean
-  }
-}
 
 const CustomerList: React.FC = () => { 
   const navigation = useNavigation();
@@ -32,12 +24,12 @@ const CustomerList: React.FC = () => {
     setIsFiltersVisible(!isFiltersVisible)
   }
 
-  useFocusEffect(
+  /*useFocusEffect(
     React.useCallback(() => { 
       setIsFiltersVisible(true);
       setCustomers([]);
     }, [])
-  );
+  );*/
 
   function handleAddCustomer(){ 
     const p = { id: 0, name: '', email: '', cpf: '', phone: ''} 
@@ -54,7 +46,7 @@ const CustomerList: React.FC = () => {
         setCustomers(response.data);  
       }).catch(error => {
         setCustomers([]);
-        Alert.alert("Não encontrado!");
+        alert("Não encontrado!");
       })
     
     setLoading(true);

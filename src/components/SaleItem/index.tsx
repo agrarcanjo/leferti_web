@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { RectButton, BorderlessButton, TouchableOpacity, Switch } from 'react-native-gesture-handler';
-import { View, Text, Linking, Alert } from 'react-native';
+import { View, Text, Linking} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
  
 import styles from './styles'; 
@@ -55,7 +55,7 @@ const SaleItem: React.FC<SaleProps> = ({sale}) => {
       const formatPhone = "+55" + sale.phone.replace(/\D/g,"");  
       return Linking.openURL(`https://api.whatsapp.com/send?phone=${formatPhone}`)
     }else{
-      Alert.alert("Cliente não possui telefone cadastrado")
+      alert("Cliente não possui telefone cadastrado")
     }
   }
 
@@ -73,7 +73,7 @@ const SaleItem: React.FC<SaleProps> = ({sale}) => {
       api.delete(`sale/${sale.idSale}`).then(()=> {  
         navigation.navigate('Landing')
       }).catch(error => {
-        Alert.alert(error.response.data);
+        alert(error.response.data);
       })
     }
   }
@@ -96,12 +96,7 @@ const SaleItem: React.FC<SaleProps> = ({sale}) => {
               Total {' '}
               <Text style={styles.priceValue}>R$ {(sale.total - sale.discount).toFixed(2)}</Text>
             </Text>
-          </View>   
-
-          <View >
-            <Text style={[styles.label, {marginLeft: 5}]}>Data da Venda</Text>
-            <Text style={styles.date}>{sale.dateRegister}</Text> 
-          </View>
+          </View>    
         </View>
         
         <BorderlessButton onPress={handleToggleFilterIsVisible} style={styles.buttonDown}>
@@ -112,16 +107,24 @@ const SaleItem: React.FC<SaleProps> = ({sale}) => {
 
       {isFiltersVisible &&
           <View style={styles.containerHidden}>
+            
             {sale.discount!=null &&
               <View style={styles.firstRow}>
+                <View style={styles.switchButton}>
                   <Text style={[styles.label]}>Desconto: </Text>
                   <Text style={[styles.name]}>{(sale.discount).toFixed(2)}</Text>
+                </View >
+                <View style={styles.switchButton}>
+                  <Text style={styles.label}>Data da Venda: </Text>
+                  <Text style={styles.date}>{sale.dateRegister}</Text> 
+                </View>
               </View>  
+              
              }
 
             {saleItem.length>0 &&               
               <View style={styles.inputGroup}>
-                <Text style={[styles.label, {width: '65%', marginLeft: 10}]}>Produto</Text>
+                <Text style={[styles.label, {width: '70%', marginLeft: 10}]}>Produto</Text>
                 <Text style={[styles.label, {width: '10%'}]}>Qnt</Text>
                 <Text style={[styles.label, {alignItems: 'flex-end', marginRight: 25}]}>Valor</Text>
               </View>

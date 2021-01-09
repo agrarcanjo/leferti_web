@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView, TextInput, BorderlessButton, RectButton, TouchableOpacity } from 'react-native-gesture-handler';
-import { View, Text, Picker, Alert} from 'react-native';
+import { View, Text, Picker} from 'react-native';
 import { Feather } from '@expo/vector-icons'
 
 import styles from './styles'
@@ -49,7 +49,7 @@ const SpendingList: React.FC = () => {
     }).then(response => {             
         setSpendings(response.data);  
     }).catch(error => {
-      Alert.alert("Não encontrado!");
+      alert("Não encontrado!");
       setSpendings([]);
     })
     

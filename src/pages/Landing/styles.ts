@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     color:'#6A6180',
     fontSize:20,
     lineHeight:30,
-    marginTop:10
+    marginTop:20
   },
 
   titleBold:{
@@ -85,7 +85,25 @@ const styles = StyleSheet.create({
     lineHeight:20,
     maxWidth:140,
     marginTop:30,
-  }
+  },
+
+  plusButton: {
+    marginTop:35,
+    backgroundColor: '#15c3d6',
+    borderRadius: 20,
+    position: 'relative',
+    width: 50,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',  
+    marginLeft: 10,
+    marginBottom: 10,
+
+  },
+
+  touchableOpacityStyle: {
+    backgroundColor: '#15c3d6', 
+  },
 })
 
 export default styles

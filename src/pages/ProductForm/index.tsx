@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, ScrollView, Text, TextInput} from 'react-native';
+import { ScrollView, Text, TextInput} from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'; 
 import { TextInputMask } from 'react-native-masked-text';
@@ -24,8 +24,7 @@ const ProductForm: React.FC = () => {
   const [dateRegisterString, setRegistrationDateString] = useState(''); 
  
   useEffect(() => {
-    if(!!params && params.id!==null){
-      console.log(params)
+    if(!!params && params.id!==null){ 
       setName(params.name);
       setPrice(params.price.toFixed(2));
       setCost(params.cost.toFixed(2));
@@ -38,7 +37,7 @@ const ProductForm: React.FC = () => {
     const product = {id, name, description, price, cost, dateRegisterString} 
 
     await api.post('/product', product).then(response => {   
-      Alert.alert('Relizado com sucesso, ID: ' + response.data.id);  
+      alert('Relizado com sucesso, ID: ' + response.data.id);  
       setName('');
       setDescription('');
       setPrice('');
@@ -46,15 +45,14 @@ const ProductForm: React.FC = () => {
       setId(0);
       navigation.navigate('ProductList');
     }).catch(error => {
-      Alert.alert(error.response.data);  
+      alert(error.response.data);  
     })        
   }  
  
 
   return (
     <SafeAreaView style={styles.container}>
-      <PageHeader title="Cadastrar Produto">
-      </PageHeader>
+      <PageHeader title="Cadastrar Produto"/>
       <ScrollView style={styles.scroller} contentContainerStyle={{ padding: 24 }}> 
 
         <Text style={styles.label}>Nome</Text>

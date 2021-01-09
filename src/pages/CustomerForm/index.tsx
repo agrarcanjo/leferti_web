@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, ScrollView, Text, TextInput} from 'react-native';
+import { ScrollView, Text, TextInput} from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'; 
 import api from '../../services/api';
@@ -37,7 +37,7 @@ const CustomerForm: React.FC = () =>  {
     const customer = {id, name, email, cpf, phone}
          
     await api.post('/customer', customer).then(response => {           
-      Alert.alert('Cliente criado com sucesso com ID: ' + response.data.id);  
+      alert('Cliente criado com sucesso com ID: ' + response.data.id);  
       setName('');  
       setCpf('');
       setPhone('');
@@ -45,7 +45,7 @@ const CustomerForm: React.FC = () =>  {
       setId(0);
       navigation.navigate('CustomerList');
     }).catch(error => {
-      Alert.alert(error.response.data);  
+      alert(error.response.data);  
     })        
   }
 
