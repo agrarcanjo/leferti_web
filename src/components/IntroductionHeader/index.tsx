@@ -32,10 +32,10 @@ const IntroductionHeader: React.FC = () => {
 
         <View style={styles.menubar}>
             <TouchableOpacity onPress={handleGoToProducts}>
-              <Text style={styles.texIconMenu}>Sobre</Text> 
+              <Text style={styles.texIconMenu}>Produtos</Text> 
             </TouchableOpacity> 
             <TouchableOpacity onPress={handleGoToAbout}>
-              <Text style={styles.texIconMenu}>Sobre</Text> 
+              <Text style={[styles.texIconMenu, {marginLeft: 10}]}>Sobre</Text> 
             </TouchableOpacity>
         </View>
     </View>

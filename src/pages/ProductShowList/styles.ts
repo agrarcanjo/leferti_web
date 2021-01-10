@@ -7,10 +7,13 @@ const styles = StyleSheet.create({
   },
 
   saleList: {
-    marginTop: 10,
+    paddingVertical: 10
   },
 
-  searchForm: { 
+  searchForm: {   
+    backgroundColor: '#fbc9e4ad',
+    paddingHorizontal: 30,
+    paddingBottom: 10,
   },
 
 
@@ -38,6 +41,7 @@ const styles = StyleSheet.create({
   },
 
   inputGroup: {
+    marginTop:10,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

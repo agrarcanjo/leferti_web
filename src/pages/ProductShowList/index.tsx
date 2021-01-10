@@ -1,88 +1,107 @@
-import React, { useState } from 'react';
-import { ScrollView, TextInput, BorderlessButton, TouchableOpacity, FlatList } from 'react-native-gesture-handler';
-import { View, Text} from 'react-native';
-import { Feather } from '@expo/vector-icons'
+import React, { useEffect, useState } from 'react';
+import { TextInput, TouchableOpacity, FlatList, BorderlessButton } from 'react-native-gesture-handler';
+import { View, Text} from 'react-native'; 
 
-import styles from './styles'
-import PageHeader from '../../components/PageHeader';
-import ProductItem, { Product } from '../../components/ProductItem';
-import api from '../../services/api';  
-import { useFocusEffect } from '@react-navigation/native'; 
+import styles from './styles' 
+import ProductShowItem, { Product } from '../../components/ProductIShowItem';
+import api from '../../services/api';   
 import IntroductionHeader from '../../components/IntroductionHeader';
+import { Feather } from '@expo/vector-icons'
+import Loading from '../../components/util/loading';
+import { proc } from 'react-native-reanimated';
   
 const ProductShowList: React.FC = () => {  
 
   const [products, setProducts] = useState<Product[]>([]);
-  const [product, setProduct] = useState('') ; 
-  const [description, setDescription] = useState('') ; 
+  const [product, setProduct] = useState('') ;  
   const [page, setPage] = useState(0) ; 
   const [totalPages, setTotalPages] = useState(0) ; 
    
   const [isFiltersVisible, setIsFiltersVisible] = useState(true);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
  
   function handleToggleFilterIsVisible(){
     setIsFiltersVisible(!isFiltersVisible)
   }
 
-  useFocusEffect(
-    React.useCallback(() => { 
-      setIsFiltersVisible(true);
-      setProducts([]);
-    }, [])
-  );
+  useEffect(()=> {  
+      setIsFiltersVisible(true); 
+      handleFilterSubmit();
+    }, []);
  
-  const handleFilterSubmit = async () => {   
-    setLoading(false); 
-    const size = 0; 
+  async function handleFilterSubmit(product = '', pageNumber = page, shouldRefresh = false) {   
+    console.log(pageNumber)
+
+    if(totalPages && pageNumber > totalPages) return;
+     
+    setLoading(true);  
+
     await api.get('/product', {
         params : {
-          product,
-          description,
+          product, 
           page, 
         }
-    }).then(response => {            
-      setProducts(response.data.content); 
-      setTotalPages(response.data.totalPages)  
+    }).then(response => {    
+      const pageNow = pageNumber + 1 ;
+      const totalPage = Number(response.data.totalPages) - 1;
 
-    }).catch(error => {
-      alert("Não encontrado!");
+      setProducts(shouldRefresh ? response.data.content : [...products, ...response.data.content]); 
+      setTotalPages(totalPage);             
+      setPage(pageNow);
+
+      console.log(response.data.content);
+
+    }).catch(error => { 
       setProducts([]);
     })   
-    setLoading(true);    
+    setLoading(false);    
   }
- 
+
+  async function refreshList(){
+    setRefreshing(true);
+    setTotalPages(0);
+
+    await handleFilterSubmit('',0, true);
+
+    setRefreshing(false);
+  }
+
+  function handleOnChangeText(text: string){
+    setProduct(text);
+      if(text && text.length>2){
+        setTotalPages(0); 
+        handleFilterSubmit(text, 0, true);
+      }else{
+        setProducts([]);
+      }
+  }
+  
   return (
     <View style={styles.container}>
-      <IntroductionHeader />
-        <PageHeader title="Produtos" >
-          {isFiltersVisible && (
-            (
-              <View style={styles.searchForm}>   
-                <View style={styles.inputGroup}>  
-                    <View style={styles.inputBlock}>             
-                      <Text style={styles.label}>Produto</Text>
-                      <TextInput 
-                        style={styles.input}  
-                        value={product} 
-                        onChangeText={setProduct}
-                      />
-                    </View>   
-                  </View>  
-                {loading && 
-                  <TouchableOpacity style={styles.submitButton} onPress={handleFilterSubmit}>
-                    <Text style={styles.submitButtonText}>Buscar Produtos</Text>
-                  </TouchableOpacity>
-                }
-              </View>
-              )
-          )}
-        </PageHeader>
-        <FlatList 
-          data={products}
-          keyExtractor={product => String(product.id)}
-          renderItem={({item}) => <ProductItem product={item} />}
-        />  
+      <IntroductionHeader />  
+      <View style={styles.searchForm}>   
+          <View style={styles.inputGroup}>  
+              <View style={styles.inputBlock}>              
+              <TextInput 
+                  style={styles.input}  
+                    value={product} 
+                    onChangeText={handleOnChangeText}
+                  />
+              </View>        
+          </View>   
+      </View> 
+      <View style={{flex:1, paddingVertical: 10, paddingHorizontal: 30 }}>    
+          <FlatList 
+            data={products}
+            keyExtractor={product => String(product.id)}
+            renderItem={({item}) => <ProductShowItem product={item} />}
+            onEndReached={() => handleFilterSubmit() }
+            onEndReachedThreshold={0.2} 
+            onRefresh={refreshList}
+            refreshing={refreshing}
+          />  
+      </View>
     </View>
   );
 }

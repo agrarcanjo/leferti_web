@@ -7,15 +7,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingLeft: 30,
     paddingRight: 30,
-    paddingBottom: 10,
-    paddingTop: 10,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
+    paddingBottom: 5,
+    paddingTop: 5,
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
   },
 
   headerIcon:{
-    width:200,
-    height:200,  
+    width:180,
+    height:180,  
     borderRadius: 100,
     backgroundColor: '#FF69B4',
     alignItems: 'center',
@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
   
   menubar: {
     justifyContent: 'flex-end',
-    flexDirection: 'row',
-    marginLeft: 10,
+    alignItems: 'flex-end',
+    flexDirection: 'row', 
   },
 
   texIcon: {
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   texIconMenu: {
     color: '#FFFFFF', 
     fontFamily:'Archivo_400Regular',
-    fontSize: 32, 
+    fontSize: 25, 
     letterSpacing: -1,
   },
 
