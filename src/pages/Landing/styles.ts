@@ -6,10 +6,8 @@ const styles = StyleSheet.create({
     justifyContent:'center',
   },
 
-  headerIcon:{
-    width:200,
-    height:200,
-    marginTop: 84, 
+  headerIcon:{ 
+    marginTop: 50, 
     color: '#FFFFFF',
     fontSize: 54,
     fontFamily:'Archivo_700Bold',
@@ -25,8 +23,7 @@ const styles = StyleSheet.create({
   landingContent:{
     justifyContent:'center',
     alignItems:'flex-start',
-    marginHorizontal:34,
-    marginBottom:64,
+    paddingLeft: 20,
     flex:1,
   },
 
@@ -36,11 +33,11 @@ const styles = StyleSheet.create({
   },
 
   title:{
-    fontFamily:'Poppins_400Regular',
-    color:'#6A6180',
-    fontSize:20,
-    lineHeight:30,
-    marginTop:20
+    fontFamily: 'Poppins_400Regular',
+    color: '#6A6180',
+    fontSize: 20,
+    lineHeight: 30,
+    marginTop: 20,
   },
 
   titleBold:{

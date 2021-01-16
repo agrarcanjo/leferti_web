@@ -202,8 +202,7 @@ const Sales: React.FC = () => {
             setIdsSaleItem([]);
             
           }).catch(error => {
-            alert(error.response.data);  
-            console.log(error.response.data)
+            alert(error.response.data); 
           })     
     }
 

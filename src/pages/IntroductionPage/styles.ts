@@ -10,8 +10,8 @@ const styles = StyleSheet.create({
     flex:1,
     justifyContent:'center',
     alignItems:'flex-start',
-    marginHorizontal:40,
-    marginTop:20,
+    marginHorizontal:30,
+    marginTop:10,
   },
  
   introductionText:{

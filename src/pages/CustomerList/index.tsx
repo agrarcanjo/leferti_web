@@ -66,7 +66,7 @@ const CustomerList: React.FC = () => {
   }
   
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : undefined}>
         <PageHeader title="Clientes" headerRight={<FilterButton/>}>
 
@@ -112,7 +112,7 @@ const CustomerList: React.FC = () => {
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
-    </ScrollView>
+    </View>
   );
 }
 

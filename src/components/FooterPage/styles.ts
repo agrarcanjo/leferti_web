@@ -34,10 +34,19 @@ const styles = StyleSheet.create({
   },
 
   whats: {
+    flexDirection: 'row', 
   },
 
-  plusWhatsapp: {  
-   
+  contato: {
+    fontFamily:'Poppins_500Medium',
+    fontSize:14,
+    color: '#6A6180',
+    bottom: 60,
+    left: 110,
+    position:'absolute',
+  },
+
+  plusWhatsapp: {     
     width: 55,
     height: 55,
     alignItems: 'center',

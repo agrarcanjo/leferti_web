@@ -31,8 +31,7 @@ const ProductShowList: React.FC = () => {
     }, []);
  
   async function handleFilterSubmit(product = '', pageNumber = page, shouldRefresh = false) {   
-    console.log(pageNumber)
-
+    
     if(totalPages && pageNumber > totalPages) return;
      
     setLoading(true);  
@@ -49,8 +48,6 @@ const ProductShowList: React.FC = () => {
       setProducts(shouldRefresh ? response.data.content : [...products, ...response.data.content]); 
       setTotalPages(totalPage);             
       setPage(pageNow);
-
-      console.log(response.data.content);
 
     }).catch(error => { 
       setProducts([]);

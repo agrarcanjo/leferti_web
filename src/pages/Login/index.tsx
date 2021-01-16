@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useNavigation } from '@react-navigation/native'
 
-import { View, Image, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView, CheckBox } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView, CheckBox } from 'react-native'
 import { RectButton } from 'react-native-gesture-handler' 
 
 import { useAuth } from '../../contexts/auth'; 

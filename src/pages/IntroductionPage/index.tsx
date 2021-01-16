@@ -24,17 +24,10 @@ const Introduction: React.FC = () => {
 
       <View style={styles.introductionTextContainer}>
         <Text style={styles.introductionText}>
-          Entre em contato {"\n"}
-          e escolha seu {"\n"}
-          Produto !
+          Para realizar sua compra {"\n"}
+          entre em contato  {"\n"}
+          conosco via Whatsapp  {"\n"}
         </Text>
-
-        <View style={styles.introductionFooter}>
-          <Image source={firstPageIcon}/>
-          <TouchableOpacity onPress={handleNavigationToNextIntroduction}>
-            <AntDesign name="right" size={40} color="black" />
-          </TouchableOpacity>
-        </View>
       </View>
 
       <FooterPage />

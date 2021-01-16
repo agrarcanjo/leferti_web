@@ -8,13 +8,13 @@ interface Props {
 const Loading = (props: Props) => {
         
   return ( 
-      <>
+      <View>
         {props.visible &&
           <View style={[styles.container, styles.horizontal]}>
-            <ActivityIndicator size="small" color="#0000ff" />
+            <ActivityIndicator size="large" color="#666" />
           </View>
         }
-      </> 
+      </View> 
 )};
 
 const styles = StyleSheet.create({

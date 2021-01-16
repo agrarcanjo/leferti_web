@@ -26,9 +26,9 @@ const FooterPage: React.FC = () => {
             onPress={handleToContact}
             style={styles.touchableOpacityStyle}>
             <MaterialCommunityIcons name="whatsapp" size={55} color="#FFFFFF"/>
-          </TouchableOpacity>
-          
+          </TouchableOpacity>          
         </View>  
+        <Text style={styles.contato}>Clique aqui para entre em contato!</Text>
       </View>
         
     </View>

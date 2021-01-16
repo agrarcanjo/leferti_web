@@ -24,13 +24,12 @@ const AboutPage: React.FC = () => {
       <View style={styles.aboutContainer}>
         <Image source={AvatarPerfil} style={styles.image} />
         <View style={styles.aboutTextContainer}>
-          <Text style={styles.introductionTextTitle}>Glória Menezes </Text>
+          <Text style={styles.introductionTextTitle}>Glória Menezes</Text>
           <Text style={styles.introductionText}>
-                  Meu objetivo é levar um toque de beleza {"\n"} 
-                a cada mulher. Realçando muito mais {"\n"} 
-                do que sua beleza interna. {"\n"}
-                - Há 20 anos sendo uma vacilona  {"\n"}
-                Mas também um amorzinho..
+                  Meu objetivo é levar um toque  {"\n"} 
+                de beleza a cada mulher.{"\n"} 
+                Realçando muito mais {"\n"} 
+                do que sua beleza interna. {"\n"}                
           </Text> 
         </View>
       </View>

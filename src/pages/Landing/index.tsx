@@ -49,8 +49,8 @@ const Landing: React.FC = () => {
     
       <View style={styles.landingContent}>
         <Text style={styles.title}>
-          Seja bem vindo, {'\n'}
-          <Text style={styles.titleBold}>O que deseja fazer ?</Text>
+          Seja bem vindo, 
+          <Text style={styles.titleBold}>  O que deseja fazer ?</Text>
         </Text>
 
         <View style={styles.buttonsContainer}>  
