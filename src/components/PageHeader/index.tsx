@@ -2,11 +2,9 @@ import React, { ReactNode } from 'react';
 import { View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; 
 
-
 import styles from './styles'
 import { BorderlessButton } from 'react-native-gesture-handler';
-import { MaterialIcons } from '@expo/vector-icons'; 
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { MaterialIcons } from '@expo/vector-icons';
 
 interface PageHeaderProps {
   title: string,
@@ -22,7 +20,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({ title, headerRight, children })
   }
 
   return (
-    <SafeAreaView style={styles.container}> 
+    <View style={styles.container}> 
       <View style={styles.topBar}>
         <BorderlessButton onPress={handleGoBack}>
           <MaterialIcons name="chevron-left" size={24} color="#FFFFFF" />
@@ -35,7 +33,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({ title, headerRight, children })
       <View style={styles.body}>
         {children}
       </View>    
-    </SafeAreaView>
+    </View>
   );
 }
 

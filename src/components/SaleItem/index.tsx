@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { RectButton, BorderlessButton, TouchableOpacity, Switch } from 'react-native-gesture-handler';
-import { View, Text, Linking} from 'react-native';
+import { RectButton, BorderlessButton, Switch, ScrollView } from 'react-native-gesture-handler';
+import { View, Text, Linking, KeyboardAvoidingView, Platform} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
  
 import styles from './styles'; 
@@ -84,7 +84,8 @@ const SaleItem: React.FC<SaleProps> = ({sale}) => {
 
  
   return (
-    <View style={styles.container}>
+  <ScrollView style={styles.container}>
+    <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : undefined}>
       <View style={styles.profile}> 
         <View style={styles.profileDonw}> 
           <View style={styles.profileInfo}>
@@ -168,8 +169,8 @@ const SaleItem: React.FC<SaleProps> = ({sale}) => {
           </View>
         }
         
-      
-    </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 }
 

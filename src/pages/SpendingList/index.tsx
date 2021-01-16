@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView, TextInput, BorderlessButton, RectButton, TouchableOpacity } from 'react-native-gesture-handler';
-import { View, Text, Picker} from 'react-native';
+import { View, Text, Picker, Platform, KeyboardAvoidingView} from 'react-native';
 import { Feather } from '@expo/vector-icons'
 
 import styles from './styles'
@@ -66,6 +66,7 @@ const SpendingList: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : undefined}>
         <PageHeader title="Gastos" headerRight={<FilterButton/>}>
           {isFiltersVisible && (
             (
@@ -151,6 +152,7 @@ const SpendingList: React.FC = () => {
             <Feather name="plus" size={35} color="#FFFFFF"/>
           </TouchableOpacity>
         </View>
+        </KeyboardAvoidingView>
     </View>
   );
 }

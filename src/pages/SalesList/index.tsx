@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { TextInput, BorderlessButton, RectButton, Switch, FlatList } from 'react-native-gesture-handler';
-import { View, Text, ActivityIndicator, PanResponder } from 'react-native';
+import { TextInput, BorderlessButton, RectButton, Switch, FlatList, ScrollView } from 'react-native-gesture-handler';
+import { View, Text, Platform, KeyboardAvoidingView} from 'react-native';
 import { Feather } from '@expo/vector-icons'
 
 import styles from './styles'
@@ -10,7 +10,6 @@ import api from '../../services/api';
 import { useFocusEffect } from '@react-navigation/native';
 import DateFilter from '../../components/util/dateFilter';
 import Loading from '../../components/util/loading';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const SaleList: React.FC = () => { 
   const [customer, setCustomer] = useState('') ; 
@@ -93,7 +92,8 @@ const SaleList: React.FC = () => {
   }
 
   return (
-    <SafeAreaView style={styles.container}> 
+    <ScrollView style={styles.container}> 
+     <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : undefined}>
       <View style={styles.container2}> 
         <View style={styles.header}>
           <Text style={styles.title}>Vendas Realizadas</Text>
@@ -162,8 +162,9 @@ const SaleList: React.FC = () => {
           data={sales}
           keyExtractor={sale => String(sale.idSale)}
           renderItem={({item}) => <SaleItem sale={item}/> }
-        />         
-    </SafeAreaView>
+        />      
+      </KeyboardAvoidingView>   
+    </ScrollView>
   );
 }
 

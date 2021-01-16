@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView, TextInput, BorderlessButton, RectButton, TouchableOpacity } from 'react-native-gesture-handler';
-import { View, Text, SafeAreaView } from 'react-native';
+import { View, Text, Platform, KeyboardAvoidingView } from 'react-native';
 import { Feather } from '@expo/vector-icons'
 
 import styles from './styles'
@@ -66,7 +66,8 @@ const CustomerList: React.FC = () => {
   }
   
   return (
-    <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.container}>
+      <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : undefined}>
         <PageHeader title="Clientes" headerRight={<FilterButton/>}>
 
           {isFiltersVisible && (
@@ -110,7 +111,8 @@ const CustomerList: React.FC = () => {
             <Feather name="plus" size={35} color="#FFFFFF"/>
           </TouchableOpacity>
         </View>
-    </SafeAreaView>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 }
 

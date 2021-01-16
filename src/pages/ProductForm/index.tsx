@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Text, TextInput} from 'react-native';
+import { KeyboardAvoidingView, ScrollView, Text, TextInput} from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'; 
 import { TextInputMask } from 'react-native-masked-text';
@@ -51,7 +51,7 @@ const ProductForm: React.FC = () => {
  
 
   return (
-    <SafeAreaView style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <PageHeader title="Cadastrar Produto"/>
       <ScrollView style={styles.scroller} contentContainerStyle={{ padding: 24 }}> 
 
@@ -105,7 +105,7 @@ const ProductForm: React.FC = () => {
         </RectButton> 
          
       </ScrollView>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   )
 }
 

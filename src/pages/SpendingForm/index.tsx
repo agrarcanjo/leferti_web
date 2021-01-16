@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Text, TextInput} from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, Text, TextInput, View} from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'; 
 import { TextInputMask } from 'react-native-masked-text';
@@ -52,11 +52,10 @@ const SpendingForm: React.FC = () => {
 }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <PageHeader title="Cadastrar Gasto">
-      </PageHeader>
-      <ScrollView style={styles.scroller} contentContainerStyle={{ padding: 24 }}> 
-
+  <ScrollView style={styles.container} contentContainerStyle={{ padding: 24 }}>
+    <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : undefined}>
+      <PageHeader title="Cadastrar Gasto" />
+      <View style={styles.scroller}> 
         <Text style={styles.label}>Gasto</Text>
         <TextInput
           style={styles.input}
@@ -107,8 +106,9 @@ const SpendingForm: React.FC = () => {
             <Text style={styles.nextButtonText}>{params.id ? 'Atualizar Gasto' : 'Cadastrar Gasto'}</Text>
         </RectButton> 
 
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+    </KeyboardAvoidingView>
+  </ScrollView>
   )
 }
 

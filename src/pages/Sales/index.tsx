@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native'; 
+import { KeyboardAvoidingView, Platform, Text, TouchableOpacity, View } from 'react-native'; 
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';   
 
-import styles from './styles' 
-import { SafeAreaView } from 'react-native-safe-area-context';
+import styles from './styles';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import { AntDesign } from '@expo/vector-icons';  
 import api from '../../services/api'; 
-import { Sale, SaleItem } from '../../components/SaleItem';
+import { Sale } from '../../components/SaleItem';
 import DateFilter from '../../components/util/dateFilter';
 
 export interface Product {
@@ -214,8 +213,9 @@ const Sales: React.FC = () => {
     }
   
     return (
-        <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.scroller} contentContainerStyle={{ padding: 24 }}>
+        <ScrollView style={styles.container} contentContainerStyle={{ padding: 24 }}>
+           <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : undefined}>
+            <View style={styles.scroller}>
                 <Text style={styles.title}>Venda</Text>
 
                 <Text style={styles.label}>Nome ou ID do Produto</Text>
@@ -331,8 +331,9 @@ const Sales: React.FC = () => {
                     <Text style={styles.nextButtonText}>Finalizar Venda</Text>
                 </TouchableOpacity>
 
-            </ScrollView>
-        </SafeAreaView>
+            </View>
+            </KeyboardAvoidingView>
+        </ScrollView>
     )
 }
 
