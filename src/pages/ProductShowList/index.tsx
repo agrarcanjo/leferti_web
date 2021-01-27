@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TextInput, TouchableOpacity, FlatList, BorderlessButton } from 'react-native-gesture-handler';
+import { TextInput, TouchableOpacity, FlatList, BorderlessButton, ScrollView} from 'react-native-gesture-handler';
 import { View, Text} from 'react-native'; 
 
 import styles from './styles' 
@@ -9,6 +9,7 @@ import IntroductionHeader from '../../components/IntroductionHeader';
 import { Feather } from '@expo/vector-icons'
 import Loading from '../../components/util/loading';
 import { proc } from 'react-native-reanimated';
+import ProductItem from '../../components/ProductItem';
   
 const ProductShowList: React.FC = () => {  
 
@@ -89,7 +90,21 @@ const ProductShowList: React.FC = () => {
           </View>   
       </View> 
       <View style={{flex:1, paddingVertical: 10, paddingHorizontal: 30 }}>    
-          <FlatList 
+      <ScrollView 
+          contentContainerStyle={{
+            paddingHorizontal: 16,
+            paddingBottom:16,
+          }}
+        style={styles.saleList}>
+          {products.map((product: Product) => (
+            <ProductShowItem 
+              key={product.id} 
+              product={product} 
+            />
+          ))}
+      </ScrollView>
+          
+          { /* <FlatList 
             data={products}
             keyExtractor={product => String(product.id)}
             renderItem={({item}) => <ProductShowItem product={item} />}
@@ -97,7 +112,8 @@ const ProductShowList: React.FC = () => {
             onEndReachedThreshold={0.2} 
             onRefresh={refreshList}
             refreshing={refreshing}
-          />  
+            
+          />  */}
       </View>
     </View>
   );
