@@ -24,7 +24,7 @@ const AboutPage: React.FC = () => {
       <View style={styles.aboutContainer}>
         <Image source={AvatarPerfil} style={styles.image} />
         <View style={styles.aboutTextContainer}>
-          <Text style={styles.introductionTextTitle}>Glória Menezes</Text>
+          <Text style={styles.introductionTextTitle}>Lidiane Dacanal</Text>
           <Text style={styles.introductionText}>
                   Meu objetivo é levar um toque  {"\n"} 
                 de beleza a cada mulher.{"\n"} 

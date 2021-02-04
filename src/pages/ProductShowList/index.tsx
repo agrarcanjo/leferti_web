@@ -9,7 +9,7 @@ import IntroductionHeader from '../../components/IntroductionHeader';
 import { Feather } from '@expo/vector-icons'
 import Loading from '../../components/util/loading';
 import { proc } from 'react-native-reanimated';
-import ProductItem from '../../components/ProductItem';
+import ProductItem from '../../components/ProductItem'; 
   
 const ProductShowList: React.FC = () => {  
 

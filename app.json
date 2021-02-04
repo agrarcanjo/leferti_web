@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "Leferti", 
-    "slug": "Leferti",
+    "name": "estilolad", 
+    "slug": "estilolad",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": { 
       "resizeMode": "cover",
       "backgroundColor": "#ffbddec2",
-      "image": "./assets/leferti.png"
+      "image": "./assets/estilolad.png"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -18,13 +18,13 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.leferti.leferti"
+      "bundleIdentifier": "com.estilolad.estilolad"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "android": {
-      "package": "com.leferti.leferti",
+      "package": "com.estilolad.estilolad",
       "versionCode": 1
     }
   }

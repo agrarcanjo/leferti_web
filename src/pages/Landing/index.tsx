@@ -44,7 +44,7 @@ const Landing: React.FC = () => {
     <View style={styles.container}>
 
       <View style={styles.header}>
-        <Text style={styles.headerIcon}>Leferti</Text>
+        <Text style={styles.headerIcon}>EstiloLad</Text>
       </View>
     
       <View style={styles.landingContent}>

@@ -39,8 +39,8 @@ const IntroductionHeader: React.FC = () => {
       </View> 
       <View style={styles.logo}>
           <TouchableOpacity style={styles.headerIcon} onPress={handleGoToHome}>
-            <Text style={styles.texIcon}>Leferti</Text>
-            <Text style={styles.texIcon2}>Makes</Text>
+            <Text style={styles.texIcon}>Estilo</Text>
+            <Text style={styles.texIcon2}>Lad</Text>
           </TouchableOpacity>
       </View>
       <View style={styles.menubar}>
