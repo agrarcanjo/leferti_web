@@ -45,17 +45,17 @@ Ou poderá iniciar a versão Web, utilizando o comando:
 
 #### Tela Web Landing
 
-![Tela 1](images/tela 1.png)
+![Tela 1](images/tela1.png)
 
 
 #### Tela Vendas Realizadas
 
-![Tela 3](images/tela 4.png)
+![Tela 3](images/tela4.png)
 
 
 #### Tela Cadastro de vendas
 
-![Tela 3](images/tela 3.png)
+![Tela 3](images/tela3.png)
 
 
  ## Licença
