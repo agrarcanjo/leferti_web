@@ -14,7 +14,7 @@ const FooterPage: React.FC = () => {
   }
 
   const handleToContact = () => {
-    return Linking.openURL(`https://api.whatsapp.com/send?phone=5562982144754`);
+    return Linking.openURL(`https://api.whatsapp.com/send?phone=556299999999`);
   }
 
   return (
