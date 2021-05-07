@@ -58,6 +58,21 @@ Ou poderá iniciar a versão Web, utilizando o comando:
 ![Tela 3](images/tela3.png)
 
 
+#### Tela Login
+
+![Video Login](images/login.gif)
+
+
+#### Tela Clientes
+
+![Video Clientes](images/clientes.gif)
+
+
+#### Tela Cadastro de Produtos
+
+![Video Produtos](images/cadastroprod.gif)
+
+
  ## Licença
 
 Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para mais detalhes.
